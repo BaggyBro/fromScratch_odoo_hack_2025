@@ -17,6 +17,20 @@ export const createTrip = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Prevent past start dates and end date before start date (assumes YYYY-MM-DD)
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    if (startDate < todayStr) {
+      return res.status(400).json({ error: "Start date cannot be in the past" });
+    }
+    if (endDate < startDate) {
+      return res.status(400).json({ error: "End date cannot be before start date" });
+    }
+
     // Create the trip
     const newTrip = await prisma.trip.create({
       data: {

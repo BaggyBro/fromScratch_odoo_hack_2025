@@ -6,40 +6,46 @@ const prisma = new PrismaClient();
 
 export async function signupAdmin(req, res) {
   try {
-    const { firstName, lastName, email, password, adminCode } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     // 1️⃣ Validate required fields
-    if (!firstName || !lastName || !email || !password || !adminCode) {
-      return res.status(400).json({ success: false, message: "All fields are required" });
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
     }
 
-    // 2️⃣ Check secret admin code
-    if (adminCode !== process.env.ADMIN_SECRET_CODE) {
-      return res.status(403).json({ success: false, message: "Invalid admin code" });
+    // 2️⃣ Check if email already exists
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already registered"
+      });
     }
 
-    // 3️⃣ Check if email already exists
-    const existingAdmin = await prisma.admin.findUnique({ where: { email } });
-    if (existingAdmin) {
-      return res.status(400).json({ success: false, message: "Email already registered" });
-    }
-
-    // 4️⃣ Hash password
+    // 3️⃣ Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 5️⃣ Create admin
-    const admin = await prisma.admin.create({
+    // 4️⃣ Create admin in User table
+    const adminUser = await prisma.user.create({
       data: {
         firstName,
         lastName,
         email,
-        password: hashedPassword
+        passwordHash: hashedPassword,
+        age: 0, // temporary value unless made optional
+        gender: "Not Specified",
+        city: "N/A",
+        country: "N/A",
+        userRole: "admin"
       }
     });
 
-    // 6️⃣ Optionally issue JWT token
+    // 5️⃣ Issue JWT token
     const token = jwt.sign(
-      { adminId: admin.admin_id, role: "admin" },
+      { userId: adminUser.id, role: "admin" },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -52,6 +58,9 @@ export async function signupAdmin(req, res) {
 
   } catch (error) {
     console.error("Admin Signup Error:", error);
-    return res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 }

@@ -21,6 +21,8 @@ model User {
   description    String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  profilePic     String?
+  userRole       String?
 
   trips          Trip[]
   communityPosts CommunityPost[]  // reverse relation
@@ -59,6 +61,7 @@ model City {
   country         String
   costIndex       Float
   popularityScore Int
+  landmark_img    String?
 
   stops           TripsTo[]
   activities      Activity[]
