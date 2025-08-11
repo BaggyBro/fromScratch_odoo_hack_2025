@@ -86,15 +86,3 @@ Modern travelers face:
 
 ### 👤 **11. User Profile**  
 - Manage account, preferences, saved places.  
-
-### 📊 **12. Admin Dashboard (Optional)**  
-- Analytics: adoption, top cities, trends.  
-
----
-
-## ⚙ **Suggested Tech Stack**  
-- 🎨 **Frontend:** React.js / Next.js, Tailwind CSS  
-- 🖥️ **Backend:** Node.js / Express or Django  
-- 🗄️ **Database:** PostgreSQL / MySQL  
-- 🔑 **Auth:** JWT / OAuth  
-- ☁️ **Hosting:** Vercel / Netlify / AWS  
