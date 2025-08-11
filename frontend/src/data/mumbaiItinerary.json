@@ -1,0 +1,267 @@
+{
+  "trip": {
+    "id": "mumbai-trip-001",
+    "name": "Mumbai Adventure",
+    "description": "Explore the vibrant city of Mumbai with this comprehensive 3-day itinerary covering the best attractions, food, and cultural experiences.",
+    "startDate": "2024-01-15",
+    "endDate": "2024-01-17",
+    "status": "Active",
+    "stopActivities": [
+      {
+        "id": "sa-001",
+        "date": "2024-01-15",
+        "time": "09:00",
+        "activity": {
+          "id": "act-001",
+          "name": "Gateway of India",
+          "description": "Start your day at Mumbai's most iconic landmark. This historic monument was built to commemorate the visit of King George V and Queen Mary to Bombay in 1911.",
+          "type": "Historical",
+          "durationMinutes": 60,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-002",
+        "date": "2024-01-15",
+        "time": "10:30",
+        "activity": {
+          "id": "act-002",
+          "name": "Taj Mahal Palace Hotel",
+          "description": "Visit the legendary Taj Mahal Palace Hotel, a symbol of luxury and heritage. Take a guided tour to learn about its rich history and architecture.",
+          "type": "Cultural",
+          "durationMinutes": 90,
+          "cost": 500
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-003",
+        "date": "2024-01-15",
+        "time": "12:30",
+        "activity": {
+          "id": "act-003",
+          "name": "Colaba Causeway Shopping",
+          "description": "Explore the vibrant Colaba Causeway market for souvenirs, street food, and local crafts. Perfect for lunch and shopping.",
+          "type": "Shopping",
+          "durationMinutes": 120,
+          "cost": 200
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-004",
+        "date": "2024-01-15",
+        "time": "15:00",
+        "activity": {
+          "id": "act-004",
+          "name": "Marine Drive",
+          "description": "Walk along the famous Marine Drive, also known as the Queen's Necklace, for stunning views of the Arabian Sea and city skyline.",
+          "type": "Scenic",
+          "durationMinutes": 90,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-005",
+        "date": "2024-01-15",
+        "time": "17:00",
+        "activity": {
+          "id": "act-005",
+          "name": "Juhu Beach",
+          "description": "Visit Juhu Beach to experience the local beach culture, enjoy street food, and watch the sunset over the Arabian Sea.",
+          "type": "Leisure",
+          "durationMinutes": 120,
+          "cost": 150
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-006",
+        "date": "2024-01-16",
+        "time": "08:00",
+        "activity": {
+          "id": "act-006",
+          "name": "Elephanta Caves",
+          "description": "Take a ferry to Elephanta Island to explore the ancient cave temples dedicated to Lord Shiva. A UNESCO World Heritage site.",
+          "type": "Historical",
+          "durationMinutes": 240,
+          "cost": 600
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-007",
+        "date": "2024-01-16",
+        "time": "13:00",
+        "activity": {
+          "id": "act-007",
+          "name": "Crawford Market",
+          "description": "Explore the historic Crawford Market, known for its fresh produce, spices, and local delicacies. Great for lunch and shopping.",
+          "type": "Food",
+          "durationMinutes": 90,
+          "cost": 300
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-008",
+        "date": "2024-01-16",
+        "time": "15:00",
+        "activity": {
+          "id": "act-008",
+          "name": "Chhatrapati Shivaji Terminus",
+          "description": "Visit the magnificent Chhatrapati Shivaji Terminus, a UNESCO World Heritage site and one of India's most beautiful railway stations.",
+          "type": "Architecture",
+          "durationMinutes": 60,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-009",
+        "date": "2024-01-16",
+        "time": "16:30",
+        "activity": {
+          "id": "act-009",
+          "name": "Dharavi Slum Tour",
+          "description": "Take a guided tour of Dharavi, one of Asia's largest slums, to understand the real Mumbai and see the community's entrepreneurial spirit.",
+          "type": "Cultural",
+          "durationMinutes": 180,
+          "cost": 800
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-010",
+        "date": "2024-01-16",
+        "time": "20:00",
+        "activity": {
+          "id": "act-010",
+          "name": "Bandra Bandstand",
+          "description": "Evening walk at Bandra Bandstand, a popular promenade with beautiful sea views and a great place to experience Mumbai's nightlife.",
+          "type": "Leisure",
+          "durationMinutes": 90,
+          "cost": 100
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-011",
+        "date": "2024-01-17",
+        "time": "09:00",
+        "activity": {
+          "id": "act-011",
+          "name": "Haji Ali Dargah",
+          "description": "Visit the famous Haji Ali Dargah, a mosque and tomb located on an islet off the coast of Worli. A spiritual and architectural marvel.",
+          "type": "Religious",
+          "durationMinutes": 90,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-012",
+        "date": "2024-01-17",
+        "time": "11:00",
+        "activity": {
+          "id": "act-012",
+          "name": "Worli Sea Face",
+          "description": "Walk along Worli Sea Face for stunning views of the Bandra-Worli Sea Link and the Arabian Sea. Perfect for photography.",
+          "type": "Scenic",
+          "durationMinutes": 60,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-013",
+        "date": "2024-01-17",
+        "time": "12:30",
+        "activity": {
+          "id": "act-013",
+          "name": "Bandra West Food Tour",
+          "description": "Explore the trendy Bandra West area with its cafes, restaurants, and street food. Try local favorites like vada pav and pav bhaji.",
+          "type": "Food",
+          "durationMinutes": 150,
+          "cost": 400
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-014",
+        "date": "2024-01-17",
+        "time": "15:30",
+        "activity": {
+          "id": "act-014",
+          "name": "National Museum",
+          "description": "Visit the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (formerly Prince of Wales Museum) to explore India's rich cultural heritage.",
+          "type": "Museum",
+          "durationMinutes": 120,
+          "cost": 200
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      },
+      {
+        "id": "sa-015",
+        "date": "2024-01-17",
+        "time": "18:00",
+        "activity": {
+          "id": "act-015",
+          "name": "Nariman Point Sunset",
+          "description": "End your Mumbai adventure with a beautiful sunset at Nariman Point, watching the city lights come alive over the Arabian Sea.",
+          "type": "Scenic",
+          "durationMinutes": 90,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-001",
+          "name": "Mumbai"
+        }
+      }
+    ]
+  }
+} 

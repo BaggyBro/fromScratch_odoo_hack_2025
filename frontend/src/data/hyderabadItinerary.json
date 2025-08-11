@@ -1,0 +1,165 @@
+{
+  "trip": {
+    "id": "hyderabad-trip-001",
+    "name": "Hyderabad Heritage",
+    "description": "Discover the rich heritage and modern charm of Hyderabad with this curated 3-day itinerary covering historical monuments, delicious cuisine, and cultural experiences.",
+    "startDate": "2024-02-10",
+    "endDate": "2024-02-12",
+    "status": "Active",
+    "stopActivities": [
+      {
+        "id": "sa-001",
+        "date": "2024-02-10",
+        "time": "09:00",
+        "activity": {
+          "id": "act-001",
+          "name": "Charminar",
+          "description": "Start your Hyderabad journey at the iconic Charminar, the city's most famous landmark. Built in 1591, this magnificent monument with four minarets is a symbol of Hyderabad's rich history and architectural grandeur.",
+          "type": "Historical",
+          "durationMinutes": 90,
+          "cost": 50
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-002",
+        "date": "2024-02-10",
+        "time": "11:00",
+        "activity": {
+          "id": "act-002",
+          "name": "Laad Bazaar",
+          "description": "Explore the vibrant Laad Bazaar, famous for its traditional bangles, pearls, and traditional Hyderabadi attire. This historic market is a paradise for shoppers and culture enthusiasts.",
+          "type": "Shopping",
+          "durationMinutes": 120,
+          "cost": 200
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-003",
+        "date": "2024-02-10",
+        "time": "14:00",
+        "activity": {
+          "id": "act-003",
+          "name": "Golconda Fort",
+          "description": "Visit the majestic Golconda Fort, a medieval fortress that was once the capital of the Qutb Shahi dynasty. Explore the impressive architecture, acoustics, and panoramic views of the city.",
+          "type": "Historical",
+          "durationMinutes": 180,
+          "cost": 100
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-004",
+        "date": "2024-02-11",
+        "time": "09:00",
+        "activity": {
+          "id": "act-004",
+          "name": "Hussain Sagar Lake",
+          "description": "Begin your day at Hussain Sagar Lake, a heart-shaped lake with the iconic Buddha statue in the middle. Take a boat ride and enjoy the serene atmosphere and beautiful views.",
+          "type": "Scenic",
+          "durationMinutes": 90,
+          "cost": 150
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-005",
+        "date": "2024-02-11",
+        "time": "11:00",
+        "activity": {
+          "id": "act-005",
+          "name": "Salar Jung Museum",
+          "description": "Explore the Salar Jung Museum, one of India's largest museums, housing a remarkable collection of art, artifacts, and antiques from around the world collected by the Salar Jung family.",
+          "type": "Museum",
+          "durationMinutes": 120,
+          "cost": 80
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-006",
+        "date": "2024-02-11",
+        "time": "14:00",
+        "activity": {
+          "id": "act-006",
+          "name": "Birla Mandir",
+          "description": "Visit the beautiful Birla Mandir, a white marble temple dedicated to Lord Venkateswara. Perched on a hill, it offers stunning views of the city and is a perfect place for spiritual reflection.",
+          "type": "Religious",
+          "durationMinutes": 90,
+          "cost": 0
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-007",
+        "date": "2024-02-12",
+        "time": "09:00",
+        "activity": {
+          "id": "act-007",
+          "name": "Qutb Shahi Tombs",
+          "description": "Explore the magnificent Qutb Shahi Tombs, the royal necropolis of the Qutb Shahi dynasty. These grand tombs showcase a unique blend of Persian, Pathan, and Hindu architectural styles.",
+          "type": "Historical",
+          "durationMinutes": 120,
+          "cost": 60
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-008",
+        "date": "2024-02-12",
+        "time": "11:30",
+        "activity": {
+          "id": "act-008",
+          "name": "Paradise Biryani",
+          "description": "Savor the world-famous Hyderabadi Biryani at Paradise restaurant. This iconic dish is a must-try culinary experience that represents the rich flavors and traditions of Hyderabad.",
+          "type": "Food",
+          "durationMinutes": 90,
+          "cost": 400
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      },
+      {
+        "id": "sa-009",
+        "date": "2024-02-12",
+        "time": "14:00",
+        "activity": {
+          "id": "act-009",
+          "name": "Chowmahalla Palace",
+          "description": "End your Hyderabad journey at the magnificent Chowmahalla Palace, the official residence of the Nizams of Hyderabad. This stunning palace complex showcases the grandeur and opulence of the Asaf Jahi dynasty.",
+          "type": "Cultural",
+          "durationMinutes": 120,
+          "cost": 200
+        },
+        "city": {
+          "id": "city-002",
+          "name": "Hyderabad"
+        }
+      }
+    ]
+  }
+} 

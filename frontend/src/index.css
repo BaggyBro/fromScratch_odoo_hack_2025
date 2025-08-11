@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design System: Black & Lavender (HSL only) */
+
+@layer base {
+  :root {
+    /* Light theme (fallback) */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    /* Brand = Lavender */
+    --brand-700: 270 75% 60%;
+    --brand-600: 270 85% 70%;
+    --brand-500: 270 90% 80%; /* ~ #D8B4FE vibe */
+    --brand-400: 240 67% 94%; /* ~ #E6E6FA */
+
+    --primary: var(--brand-600);
+    --primary-foreground: 240 10% 10%;
+
+    --secondary: var(--brand-400);
+    --secondary-foreground: 240 10% 10%;
+
+    --muted: 240 7% 97%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: var(--brand-400);
+    --accent-foreground: 240 10% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: var(--primary);
+
+    --radius: 0.75rem;
+
+    /* Sidebar tokens */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 6% 20%;
+    --sidebar-primary: var(--brand-600);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: var(--brand-400);
+    --sidebar-accent-foreground: 240 6% 20%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: var(--brand-600);
+
+    /* Effects */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 32px hsl(var(--brand-500) / 0.35);
+  }
+
+  .dark {
+    /* Dark theme as default look: near-black canvas */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+
+    --card:  0 0% 5%;
+    --card-foreground: 240 67% 94%;
+
+    --popover: 240 8% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: var(--brand-500); /* luminous lavender */
+    --primary-foreground: 255 100% 12%;
+
+    --secondary: 255 20% 16%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 8% 12%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 255 20% 16%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 8% 14%;
+    --input: 240 8% 14%;
+    --ring: var(--brand-500);
+
+    --sidebar-background: 240 10% 5%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: var(--brand-600);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 255 20% 16%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 240 8% 14%;
+    --sidebar-ring: var(--brand-600);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+/* Utilities bound to tokens */
+@layer utilities {
+  .bg-gradient-primary { background-image: linear-gradient(135deg, hsl(var(--brand-700)), hsl(var(--brand-500))); }
+  .glow-shadow { box-shadow: var(--shadow-glow); }
+}
+
+/* Animation helpers (names are declared in tailwind.config.ts) */
+@layer components {
+  .story-link {
+    position: relative;
+    display: inline-block;
+  }
+  .story-link::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 300ms ease;
+  }
+  .story-link:hover::after { transform: scaleX(1); transform-origin: bottom left; }
+  .hover-scale { transition: transform 200ms ease; }
+  .hover-scale:hover { transform: scale(1.05); }
+  .pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+}
