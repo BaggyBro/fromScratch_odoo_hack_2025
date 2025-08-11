@@ -1,11 +1,17 @@
-
 import express from 'express';
+import cors from 'cors';  // <-- import cors
 import { PrismaClient } from '@prisma/client';
 import router from './routes/routes.js';
 
 const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
+
+// Use CORS middleware allowing your frontend origin
+app.use(cors({
+  origin: 'http://localhost:8081',
+  credentials: true,   // if you plan to send cookies or auth headers, else optional
+}));
 
 app.use(express.json());
 
