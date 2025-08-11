@@ -7,8 +7,9 @@ import { getCommunityPosts, createCommunityPost } from '../controllers/community
 import { searchCities } from '../controllers/search.js';
 import { getTripById, planWithAI, viewTrips } from '../controllers/trips.js';
 import { getProfile } from '../controllers/userProfile.js';
-import { fetchCityActivities, saveSelectedCityActivities } from '../controllers/searchController.js'; // ✅ new merged function
+import { fetchCityActivities, saveSelectedCityActivities } from '../controllers/searchController.js';
 import updateActivityCost from '../controllers/budget.js';
+import { signupAdmin } from '../controllers/Adminauth.js';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.get("/profile", authenticate, getProfile);
 /* USER AUTH ROUTES */
 router.post("/auth/signup", signupUser);
 router.post("/auth/login", loginUser);
+router.post("/auth/admin/signup", signupAdmin); // Added admin signup route
 
 /* TRIP ROUTES */
 router.post("/trips/create", authenticate, createTrip);
@@ -31,7 +33,7 @@ router.post("/community", authenticate, createCommunityPost); // protected
 
 /* SEARCH & CITY/ACTIVITY SAVE ROUTES */
 router.get("/trips/:tripId/search/cities", authenticate, searchCities);
-router.post("/trips/:tripId/search/api", authenticate, fetchCityActivities); // ✅ replaced old routes
+router.post("/trips/:tripId/search/api", authenticate, fetchCityActivities);
 router.post("/trips/:tripId/add-city-with-activities", authenticate, saveSelectedCityActivities);
 
 router.post("/activity/cost", authenticate, updateActivityCost);
