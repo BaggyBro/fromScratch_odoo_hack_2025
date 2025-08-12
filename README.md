@@ -1,6 +1,9 @@
 # fromScratch_odoo_hack_2025
 Team: fromScratch
 Team Leader: Anuraag Bagal
+
+VIDEO DEMONSTARTION:https://drive.google.com/drive/u/0/folders/11yQ821_6QKr8nqBDqxoZFwD8xxu2lZF2
+
 Members:
 
 # Anuraag Bagal
