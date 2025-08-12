@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Spline from "@splinetool/react-spline";
 
-const API_BASE = "http://localhost:3000"; // Your backend URL
+const API_BASE = "http://localhost:3000";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,6 @@ const Login = () => {
     setError("");
 
     if (role === "admin") {
-      // redirect to admin login form
       window.location.href = "/admin-login";
       return;
     }
@@ -38,7 +37,25 @@ const Login = () => {
       }
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify({ ...data.user, role: "user" }));
+      
+      try {
+        const profileRes = await fetch(`${API_BASE}/profile`, {
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        });
+        
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          if (profileData.success) {
+            localStorage.setItem("user", JSON.stringify({ ...profileData.user, role: "user" }));
+          }
+        }
+      } catch (profileError) {
+        console.error("Failed to fetch profile:", profileError);
+        localStorage.setItem("user", JSON.stringify({ ...data.user, role: "user" }));
+      }
+      
       localStorage.removeItem("justSignedUp");
       window.location.href = "/";
     } catch (err: any) {
@@ -60,7 +77,6 @@ const Login = () => {
             <form onSubmit={onSubmit} className="space-y-4">
               {error && <p className="text-red-500 text-sm">{error}</p>}
 
-              {/* Role selector */}
               <div>
                 <label className="block mb-1 text-sm">Login as</label>
                 <select
@@ -73,7 +89,6 @@ const Login = () => {
                 </select>
               </div>
 
-              {/* Only show email/password when user selected */}
               {role === "user" && (
                 <>
                   <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />

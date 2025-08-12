@@ -27,42 +27,47 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        setLoading(true);
-        setError("");
+  const refreshNavbar = () => {
+    window.dispatchEvent(new CustomEvent('profileUpdated'));
+  };
 
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setError("Not authenticated");
-          setLoading(false);
-          return;
-        }
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-        const res = await fetch("http://localhost:3000/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch profile");
-        }
-
-        const data = await res.json();
-        if (data.success) {
-          setUser(data.user);
-        } else {
-          setError(data.message || "Failed to load profile");
-        }
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Not authenticated");
         setLoading(false);
+        return;
       }
-    }
 
+      const res = await fetch("http://localhost:3000/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        setUser(data.user);
+        refreshNavbar();
+      } else {
+        setError(data.message || "Failed to load profile");
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchProfile();
   }, []);
 
@@ -89,7 +94,15 @@ const Profile = () => {
       <div className="absolute inset-0 bg-[url('/back-image.jpg')] bg-cover bg-center blur-sm "></div>
 
       <div className="relative z-10 max-w-5xl mx-auto p-8 bg-[#D3D3FF]/60 rounded-2xl shadow-xl backdrop-blur-md">
-        <h1 className="text-3xl font-bold mb-6 text-black">User Profile</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-black">User Profile</h1>
+          <button 
+            onClick={fetchProfile}
+            className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition"
+          >
+            Refresh
+          </button>
+        </div>
 
         <div className="flex flex-col md:flex-row gap-6 mb-10 border border-black/10 p-6 rounded-lg bg-white/20 backdrop-blur-sm">
           <img

@@ -4,6 +4,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePic?: string;
+};
+
 const baseLinks = [
   { to: "/", label: "Home" },
   { to: "/community", label: "Community" },
@@ -11,11 +18,53 @@ const baseLinks = [
 
 const Navbar = () => {
   const location = useLocation();
-  const [user, setUser] = useState<{ photo?: string; firstName?: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+
+  const fetchUserProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await fetch("http://localhost:3000/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            setUser(data.user);
+            localStorage.setItem("user", JSON.stringify(data.user));
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    setUser(storedUser ? JSON.parse(storedUser) : null);
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error("Failed to parse stored user:", error);
+      }
+    }
+    
+    fetchUserProfile();
+
+    const handleProfileUpdate = () => {
+      fetchUserProfile();
+    };
+
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -56,7 +105,7 @@ const Navbar = () => {
             <div className="relative flex items-center gap-2">
               <Link to="/profile" title={user.firstName || "User"}>
                 <img
-                  src={user.photo ? user.photo : "https://via.placeholder.com/32?text=User"}
+                  src={user.profilePic ? user.profilePic : "https://via.placeholder.com/32?text=User"}
                   alt="User profile"
                   className="h-8 w-8 rounded-full object-cover cursor-pointer"
                 />
@@ -108,7 +157,7 @@ const Navbar = () => {
                     <>
                       <Link to="/profile" title={user.firstName || "User"}>
                         <img
-                          src={user.photo ? user.photo : "https://via.placeholder.com/32?text=User"}
+                          src={user.profilePic ? user.profilePic : "https://via.placeholder.com/32?text=User"}
                           alt="User profile"
                           className="h-8 w-8 rounded-full object-cover cursor-pointer"
                         />
