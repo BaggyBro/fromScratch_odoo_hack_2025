@@ -96,12 +96,12 @@ const Profile = () => {
       <div className="relative z-10 max-w-5xl mx-auto p-8 bg-[#D3D3FF]/60 rounded-2xl shadow-xl backdrop-blur-md">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-black">User Profile</h1>
-          <button 
+          {/* <button 
             onClick={fetchProfile}
             className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition"
           >
             Refresh
-          </button>
+          </button> */}
         </div>
 
         <div className="flex flex-col md:flex-row gap-6 mb-10 border border-black/10 p-6 rounded-lg bg-white/20 backdrop-blur-sm">
