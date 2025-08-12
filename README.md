@@ -3,10 +3,10 @@ Team: fromScratch
 Team Leader: Anuraag Bagal
 Members:
 
-Anuraag Bagal
-Navya Sinha
-Tanishq Chavan
-Rahul Chaturvedi
+# Anuraag Bagal
+# Navya Sinha
+# Tanishq Chavan
+# Rahul Chaturvedi
 
 Hackathon: Odoo Hackathon, 11–12 August 2025
 
