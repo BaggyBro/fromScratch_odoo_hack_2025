@@ -1,88 +1,87 @@
 # fromScratch_odoo_hack_2025
-Odoo hackathon 11-12 Aug 2025
+Team: fromScratch
+Team Leader: Anuraag Bagal
+Members:
 
-Team fromScratch (Team Leader: Anuraag Bagal)
-1. Anuraag Bagal
-2. Navya Sinha
-3. Tanishq Chavan
-4. Rahul Chaturvedi
+Anuraag Bagal
+Navya Sinha
+Tanishq Chavan
+Rahul Chaturvedi
 
-# 🌍 **GlobeTrotter – Personalized Travel Planning Platform**  
+Hackathon: Odoo Hackathon, 11–12 August 2025
 
-## 🎯 **Vision**  
-- 🌐 **Personalized, intelligent, collaborative** travel platform.  
-- ✈️ Helping users **dream, design, and organize trips** effortlessly.  
-- 🗺️ Provide an **end-to-end travel planning experience**.  
-- 🤝 Enable:
-  - 🏙️ Explore global destinations.  
-  - 📅 Create structured itineraries.  
-  - 💰 Make cost-effective travel decisions.  
-  - 📤 Share plans with a travel community.  
+# **GlobeTrotter – Personalized Travel Planning Platform**  
 
----
+## Vision
+GlobeTrotter is a personalized, intelligent, and collaborative travel planning platform designed to help users dream, design, and organize trips effortlessly.
+Our goal is to provide an end-to-end travel planning experience while enabling users to:
 
-## 🚀 **Mission**  
-- 👥 Deliver a **user-focused** app for **multi-city trip planning**.  
-- 📍 Offer tools to:
-  - 🏖️ Add/manage stops & durations.  
-  - 🔍 Discover cities & activities.  
-  - 📊 Auto-estimate budgets.  
-  - 🗓️ View interactive timelines.  
-  - 📢 Share itineraries with friends/public.  
-- 💾 Use **relational databases** for storage.  
-- 💻 Create a **smooth, responsive** UI.  
+Explore destinations worldwide
+Create structured itineraries
+Make cost-effective travel decisions
+Share plans with a travel community
 
 ---
 
-## ❗ **Problem Statement**  
-Modern travelers face:  
-- 🧳 Struggle with **multi-city organization**.  
-- ⏳ Difficulty assigning **dates, activities & budgets**.  
-- 🔍 Lack of **reliable travel recommendations**.  
-- 💸 Unclear **cost breakdowns**.  
-- 📤 Hassle in **sharing plans**.  
-
-💡 **Solution:** GlobeTrotter combines trip creation, activity discovery, budgeting, and social sharing into **one streamlined platform**.
+## Mission
+Deliver a user-focused application for multi-city trip planning that offers tools to:
+Add and manage stops with durations
+Discover cities and activities
+Automatically estimate budgets
+View interactive timelines
+Share itineraries with friends or the public
+The platform will use relational databases for secure storage and offer a smooth, responsive user interface.
 
 ---
 
-## 🛠 **Core Features**  
+## Problem Statement
+Modern travelers often face challenges such as:
+Difficulty organizing multi-city trips
+Managing dates, activities, and budgets efficiently
+Lack of reliable travel recommendations
+Unclear cost breakdowns
+Inconvenient ways to share travel plans
+Our Solution: GlobeTrotter combines trip creation, activity discovery, budgeting, and social sharing into one streamlined platform.
+---
 
-### 🔐 **1. Authentication**  
-- Secure **login/signup**.  
-- Email/password & account recovery.  
+## Core Features
+1. Authentication
+Secure login/signup
 
-### 🏠 **2. Dashboard / Home**  
-- Upcoming trips & trending destinations.  
-- Quick-start trip planning.  
+Email/password management and account recovery
 
-### 🛫 **3. Trip Creation**  
-- Add trip name, dates, description & cover photo.  
+2. Dashboard / Home
+View upcoming trips and trending destinations
+Quick-start trip planning
 
-### 📂 **4. My Trips**  
-- View, edit, duplicate, delete itineraries.  
+3. Trip Creation
+Add trip name, dates, description, and cover photo
 
-### 🗺️ **5. Itinerary Builder**  
-- Add cities & reorder stops.  
-- Assign activities with drag-and-drop.  
+4. My Trips
+View, edit, duplicate, and delete itineraries
 
-### 🔍 **6. City Search**  
-- Find cities with **country, cost index, popularity** info.  
+5. Itinerary Builder
+Add cities and reorder stops.
+Assign activities with drag-and-drop functionality.
 
-### 🎡 **7. Activity Search**  
-- Discover tours, adventures, dining.  
-- Use filters, save to itinerary.  
+6. City Search
+Find cities with country, cost index, and popularity information
 
-### 💰 **8. Budget & Expense Tracking**  
-- Charts by category.  
-- Daily cost estimation.  
+7. Activity Search
+Discover tours, adventures, and dining options
+Apply filters and save activities to an itinerary
 
-### 📆 **9. Calendar & Timeline**  
-- Visual trip calendar.  
-- Reorder activities easily.  
+8. Budget & Expense Tracking
+Charts by category
+Daily cost estimation
 
-### 🌐 **10. Public Itinerary Sharing**  
-- Share via **link or social media**.  
+9. Calendar & Timeline
+Visual trip calendar
+Easy activity reordering
 
-### 👤 **11. User Profile**  
-- Manage account, preferences, saved places.  
+10. Public Itinerary Sharing
+Share itineraries via link or social media
+
+11. User Profile
+Manage account, preferences, and saved places
+ 
