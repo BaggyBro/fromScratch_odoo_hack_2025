@@ -17,7 +17,7 @@ type User = {
   email: string;
   language?: string;
   description?: string;
-  photo?: string;
+  profilePic?: string;
   trips: Trip[];
 };
 
@@ -70,11 +70,8 @@ const Profile = () => {
     <div className="min-h-screen bg-black flex items-center justify-center">
       <div className="text-center">
         <div className="relative w-16 h-16 mx-auto mb-4">
-          {/* Outer ring */}
           <div className="absolute inset-0 border-4 border-[#d3d3ff]/20 rounded-full"></div>
-          {/* Animated ring */}
           <div className="absolute inset-0 border-4 border-transparent border-t-[#d3d3ff] rounded-full animate-spin"></div>
-          {/* Inner dot */}
           <div className="absolute inset-2 bg-[#d3d3ff] rounded-full animate-pulse"></div>
         </div>
         <p className="text-[#d3d3ff] text-lg font-medium">Loading Profile...</p>
@@ -89,19 +86,15 @@ const Profile = () => {
 
   return (
     <div className="relative min-h-screen bg-black p-8">
-      {/* Background overlay */}
       <div className="absolute inset-0 bg-[url('/back-image.jpg')] bg-cover bg-center blur-sm "></div>
 
-      {/* Content container */}
       <div className="relative z-10 max-w-5xl mx-auto p-8 bg-[#D3D3FF]/60 rounded-2xl shadow-xl backdrop-blur-md">
-        {/* Header */}
         <h1 className="text-3xl font-bold mb-6 text-black">User Profile</h1>
 
-        {/* Profile Card */}
         <div className="flex flex-col md:flex-row gap-6 mb-10 border border-black/10 p-6 rounded-lg bg-white/20 backdrop-blur-sm">
           <img
             src={
-              user.photo || "https://via.placeholder.com/150?text=User+Image"
+              user.profilePic || "https://via.placeholder.com/150?text=User+Image"
             }
             alt={`${user.firstName} ${user.lastName}`}
             className="w-32 h-32 rounded-full object-cover border-4 border-white/30 shadow-lg"
@@ -141,9 +134,7 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Trips Section */}
         <div className="space-y-8">
-          {/* Preplanned Trips */}
           <section>
             <h3 className="text-xl font-semibold mb-4 text-black">
               Preplanned Trips
@@ -157,7 +148,7 @@ const Profile = () => {
                   key={trip.id}
                   className="border border-black/10 rounded-lg p-4 bg-white/20 backdrop-blur-sm shadow-md"
                 >
-                  <h4 className="font-semibold mb-2">{trip.name || "Trip"}</h4>
+                  <h4 className="font-semibold mb-2 text-black">{trip.name || "Trip"}</h4>
                   <button
                     onClick={() => navigate(`/build-itinerary/${trip.id}`)}
                     className="mt-auto bg-black text-white rounded px-3 py-1 hover:bg-gray-800 transition"
@@ -169,7 +160,6 @@ const Profile = () => {
             </div>
           </section>
 
-          {/* Previous Trips */}
           <section>
             <h3 className="text-xl font-semibold mb-4 text-black">
               Previous Trips
@@ -181,7 +171,7 @@ const Profile = () => {
               {previousTrips.map((trip) => (
                 <div
                   key={trip.id}
-                  className="border border-black/10 rounded-lg p-4 bg-white/20 backdrop-blur-sm shadow-md"
+                  className="border border-black/10 rounded-lg p-4 bg-white/20 backdrop-blur-sm shadow-md text-black"
                 >
                   <h4 className="font-semibold mb-2">{trip.name || "Trip"}</h4>
                   <button

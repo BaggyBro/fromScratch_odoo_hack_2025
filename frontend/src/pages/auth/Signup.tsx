@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { profilePhotoAPI } from "@/lib/api";
 import Spline from "@splinetool/react-spline";
 
 const Signup = () => {
@@ -24,29 +26,32 @@ const Signup = () => {
   const [step, setStep] = useState<"choose" | "form">("choose");
 
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Upload selected photo file to Cloudinary
   const uploadPhotoToCloudinary = async (file: File) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "unsigned_preset"); // Replace with your preset
     try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/DBdbxpyfrvd/image/upload`,
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-      const result = await res.json();
-      if (res.ok) {
-        setPhotoUrl(result.secure_url);
-      } else {
-        alert("Photo upload failed");
-      }
+      // Convert file to base64
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64 = e.target?.result as string;
+        
+        // For now, just store the base64 data
+        // We'll handle the actual upload after signup
+        setPhotoUrl(base64);
+        toast({
+          title: "Photo Selected! 📸",
+          description: "Photo will be uploaded after account creation",
+        });
+      };
+      reader.readAsDataURL(file);
     } catch (error) {
-      alert("Error uploading photo");
-      console.error(error);
+      console.error("Upload error:", error);
+      toast({
+        title: "Upload Failed",
+        description: "Failed to process photo. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -95,14 +100,60 @@ const Signup = () => {
       });
       const data = await res.json();
       if (res.ok) {
+        
+        // If we have a photo URL, upload it to Cloudinary
+        if (photoUrl && photoUrl.startsWith('data:')) {
+          try {
+            const photoResponse = await fetch("http://localhost:3000/profile/photo/upload", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${data.token || ''}`,
+              },
+              body: JSON.stringify({ photoUrl }),
+            });
+            
+            if (photoResponse.ok) {
+              toast({
+                title: "Account Created! 🎉",
+                description: "Your account and profile photo have been created successfully!",
+              });
+            } else {
+              toast({
+                title: "Account Created! 🎉",
+                description: "Account created successfully, but photo upload failed. You can add a photo later.",
+              });
+            }
+          } catch (photoError) {
+            console.error("Photo upload error:", photoError);
+            toast({
+              title: "Account Created! 🎉",
+              description: "Account created successfully, but photo upload failed. You can add a photo later.",
+            });
+          }
+        } else {
+          toast({
+            title: "Account Created! 🎉",
+            description: "Your account has been created successfully. Please log in.",
+          });
+        }
+        
         localStorage.setItem("justSignedUp", "true");
         navigate("/login");
       } else {
-        alert(data.message || "Signup failed");
+        toast({
+          title: "Signup Failed",
+          description: data.message || "Signup failed. Please try again.",
+          variant: "destructive",
+        });
       }
     } catch (err) {
       console.error(err);
-      alert("Error connecting to server");
+      toast({
+        title: "Connection Error",
+        description: "Error connecting to server. Please check your connection.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

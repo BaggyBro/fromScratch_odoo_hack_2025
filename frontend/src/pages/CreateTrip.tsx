@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, Settings, X } from "lucide-react";
+import { Wand2, Settings, X, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { tripAPI } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +27,7 @@ const CreateTrip = () => {
   const [aiPrompt, setAiPrompt] = useState("");
   const [createdTripId, setCreatedTripId] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Calculate tomorrow's date in yyyy-mm-dd format
   const getTomorrowDate = () => {
@@ -65,9 +67,19 @@ const CreateTrip = () => {
           "Error creating trip:",
           error.response.data.error || error.message
         );
+        toast({
+          title: "Error",
+          description: error.response.data.error || "Failed to create trip",
+          variant: "destructive",
+        });
       } else {
         // Network or other error
         console.error("Error creating trip:", error.message);
+        toast({
+          title: "Network Error",
+          description: "Please check your connection and try again",
+          variant: "destructive",
+        });
       }
     }
   };
@@ -93,7 +105,11 @@ const CreateTrip = () => {
       }
     } catch (error: any) {
       console.error("Error creating trip:", error);
-      alert("Failed to create trip. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to create trip. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -249,11 +265,11 @@ const CreateTrip = () => {
 
       {/* AI Planning Dialog */}
       <Dialog open={showAiDialog} onOpenChange={setShowAiDialog}>
-        <DialogContent className="sm:max-w-[500px] bg-white">
+        <DialogContent className="sm:max-w-[500px] bg-[#e6e6fe]">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-[#d3d3ff]">
               <Wand2 className="w-5 h-5 text-purple-600" />
-              AI Trip Planning
+              <div className="text-black">AI Trip Planning</div>
             </DialogTitle>
           </DialogHeader>
 
@@ -294,7 +310,7 @@ const CreateTrip = () => {
               <Button
                 onClick={handleAiPromptSubmit}
                 disabled={!aiPrompt.trim() || isAiLoading}
-                className="flex-1 bg-purple-600 hover:bg-purple-700"
+                className="flex-1 bg-[#d3d3ff] hover:bg-purple-300"
               >
                 {isAiLoading ? (
                   <div className="flex items-center gap-2">

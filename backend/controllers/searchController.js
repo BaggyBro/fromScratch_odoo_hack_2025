@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import fetch from "node-fetch";
 
-const GEOAPIFY_KEY = process.env.GEOAPIFY_KEY;;
+const GEOAPIFY_KEY = process.env.GEOAPIFY_KEY;
 const GOOGLE_KEY = process.env.GOOGLE_KEY;
 
 // 🔹 Helper: Get Google Places photo final URL (follows redirect)
@@ -57,9 +57,9 @@ async function findOrCreateCity(cityName, state = "", country = "") {
 
     // Fallback to Street View if no landmark found
     if (!landmarkImg) {
-      landmarkImg = `https://maps.googleapis.com/maps/api/streetview?size=600x400&location=${encodeURIComponent(
-        cityName
-      )}&key=${GOOGLE_KEY}`;
+             landmarkImg = `https://maps.googleapis.com/maps/api/streetview?size=600x400&location=${encodeURIComponent(
+         cityName
+       )}&key=${GOOGLE_KEY}`;
     }
 
     city = await prisma.city.create({

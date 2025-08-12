@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 import {
   Filter,
   SortAsc,
@@ -32,6 +33,7 @@ interface SearchResult {
 const ActivitySearch = () => {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -181,11 +183,13 @@ const ActivitySearch = () => {
       });
 
       // If this also fails, show a more helpful error message
-      alert(
-        `Failed to save activities. Error: ${error.response?.status} - ${
+      toast({
+        title: "Save Failed",
+        description: `Failed to save activities. Error: ${error.response?.status} - ${
           error.response?.statusText || error.message
-        }`
-      );
+        }`,
+        variant: "destructive",
+      });
     }
   };
 

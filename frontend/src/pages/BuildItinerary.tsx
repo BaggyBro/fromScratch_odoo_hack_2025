@@ -6,9 +6,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useTrip } from "@/hooks/useTrip";
 import { formatDate, calculateDays } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, ChevronRight, Check, IndianRupee } from "lucide-react";
+import { ChevronDown, ChevronRight, Check, IndianRupee, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 const BuildItinerary = () => {
   const { tripId } = useParams<{ tripId: string }>();
@@ -18,6 +19,7 @@ const BuildItinerary = () => {
   const [editingCost, setEditingCost] = useState<number | null>(null);
   const [costInput, setCostInput] = useState("");
   const [updatingCost, setUpdatingCost] = useState<number | null>(null);
+  const { toast } = useToast();
 
   const toggleSection = (index: number) => {
     setOpenSections(prev => {
@@ -39,7 +41,11 @@ const BuildItinerary = () => {
   const handleCostSave = async (activityId: number) => {
     const cost = parseFloat(costInput);
     if (isNaN(cost) || cost < 0) {
-      alert("Please enter a valid cost amount");
+      toast({
+        title: "Invalid Cost",
+        description: "Please enter a valid cost amount",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -61,11 +67,20 @@ const BuildItinerary = () => {
         });
       }
       
+      toast({
+        title: "Cost Updated! 💰",
+        description: "Activity cost has been updated successfully",
+      });
+      
       setEditingCost(null);
       setCostInput("");
     } catch (error) {
       console.error("Failed to update cost:", error);
-      alert("Failed to update cost. Please try again.");
+      toast({
+        title: "Update Failed",
+        description: "Failed to update cost. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setUpdatingCost(null);
     }

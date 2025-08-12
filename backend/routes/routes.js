@@ -9,7 +9,8 @@ import { getTripById, planWithAI, viewTrips } from '../controllers/trips.js';
 import { getProfile } from '../controllers/userProfile.js';
 import { fetchCityActivities, saveSelectedCityActivities } from '../controllers/searchController.js';
 import updateActivityCost from '../controllers/budget.js';
-import { signupAdmin } from '../controllers/Adminauth.js';
+import { signupAdmin, loginAdmin } from '../controllers/Adminauth.js';
+import { uploadProfilePhoto, getProfilePhoto, deleteProfilePhoto, updateProfilePhoto, uploadProfilePhotoFile, upload } from '../controllers/profilePhoto.js';
 
 const router = express.Router();
 
@@ -19,7 +20,8 @@ router.get("/profile", authenticate, getProfile);
 /* USER AUTH ROUTES */
 router.post("/auth/signup", signupUser);
 router.post("/auth/login", loginUser);
-router.post("/auth/admin/signup", signupAdmin); // Added admin signup route
+router.post("/auth/admin/signup", signupAdmin);
+router.post("/auth/admin/login", loginAdmin);  // Added admin signup route
 
 /* TRIP ROUTES */
 router.post("/trips/create", authenticate, createTrip);
@@ -37,5 +39,12 @@ router.post("/trips/:tripId/search/api", authenticate, fetchCityActivities);
 router.post("/trips/:tripId/add-city-with-activities", authenticate, saveSelectedCityActivities);
 
 router.post("/activity/cost", authenticate, updateActivityCost);
+
+/* PROFILE PHOTO ROUTES */
+router.post("/profile/photo/upload", authenticate, uploadProfilePhoto);
+router.post("/profile/photo/upload-file", authenticate, upload.single('photo'), uploadProfilePhotoFile);
+router.get("/profile/photo", authenticate, getProfilePhoto);
+router.delete("/profile/photo", authenticate, deleteProfilePhoto);
+router.put("/profile/photo", authenticate, updateProfilePhoto);
 
 export default router;

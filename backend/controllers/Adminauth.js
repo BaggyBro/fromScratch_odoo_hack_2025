@@ -64,3 +64,70 @@ export async function signupAdmin(req, res) {
     });
   }
 }
+
+export async function loginAdmin(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    // 1️⃣ Validate required fields
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required"
+      });
+    }
+
+    // 2️⃣ Find admin user by email
+    const admin = await prisma.user.findFirst({
+      where: {
+        email,
+        userRole: "admin"
+      }
+    });
+
+    // 3️⃣ Check if admin exists
+    if (!admin) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid admin credentials"
+      });
+    }
+
+    // 4️⃣ Verify password
+    const isValidPassword = await bcrypt.compare(password, admin.passwordHash);
+    if (!isValidPassword) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid admin credentials"
+      });
+    }
+
+    // 5️⃣ Generate JWT token
+    const token = jwt.sign(
+      { userId: admin.id, role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // 6️⃣ Send success response
+    return res.status(200).json({
+      success: true,
+      message: "Admin logged in successfully",
+      token,
+      admin: {
+        id: admin.id,
+        firstName: admin.firstName,
+        lastName: admin.lastName,
+        email: admin.email,
+        role: admin.userRole
+      }
+    });
+
+  } catch (error) {
+    console.error("Admin Login Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+}

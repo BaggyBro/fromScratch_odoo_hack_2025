@@ -21,6 +21,7 @@ export async function getProfile(req, res) {
         description: true,
         createdAt: true,
         updatedAt: true,
+        profilePic: true,
         trips: {
           include: {
             stops: {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Spline from "@splinetool/react-spline";
 
 const API_BASE = "http://localhost:3000";
 
@@ -41,53 +42,64 @@ const AdminSignup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
-      <Card className="w-full max-w-lg bg-black/60 border-[#E6E6FA]/50">
-        <CardHeader>
-          <CardTitle className="text-2xl">Admin Signup</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-3">
-            {error && <p className="text-red-400 text-sm">{error}</p>}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <main className="min-h-screen bg-black flex">
+      {/* Left side - Admin Signup Form */}
+      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
+        <Card className="w-full max-w-xl text-[#d3d3ff]">
+          <CardHeader>
+            <CardTitle className="text-2xl text-[#d3d3ff]">Admin Signup</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={onSubmit} className="space-y-3">
+              {error && <p className="text-red-400 text-sm">{error}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Input
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+                <Input
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
               <Input
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <Input
-                placeholder="Last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
-            </div>
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <Button
-              type="submit"
-              className="w-full bg-[#E6E6FA] text-black hover:bg-[#E6E6FA]/80"
-              disabled={loading}
-            >
-              {loading ? "Creating..." : "Create Admin Account"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+              <Button
+                type="submit"
+                className="w-full bg-[#E6E6FA] text-black hover:bg-[#E6E6FA]/80"
+                disabled={loading}
+              >
+                {loading ? "Creating..." : "Create Admin Account"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Right side - Spline */}
+      <div className="hidden md:block w-1/2 h-screen">
+        <Spline
+          scene="https://prod.spline.design/RJpSCkoPCHxfmSjY/scene.splinecode"
+          className="w-full h-full"
+        />
+      </div>
+    </main>
   );
 };
 

@@ -138,4 +138,31 @@ export const budgetAPI = {
   },
 };
 
+// Profile Photo API functions
+export const profilePhotoAPI = {
+  // Upload profile photo
+  uploadProfilePhoto: async (photoUrl: string) => {
+    const response = await api.post('/profile/photo/upload', { photoUrl });
+    return response.data;
+  },
+
+  // Get profile photo
+  getProfilePhoto: async () => {
+    const response = await api.get('/profile/photo');
+    return response.data;
+  },
+
+  // Delete profile photo
+  deleteProfilePhoto: async () => {
+    const response = await api.delete('/profile/photo');
+    return response.data;
+  },
+
+  // Update profile photo
+  updateProfilePhoto: async (photoUrl: string) => {
+    const response = await api.put('/profile/photo', { photoUrl });
+    return response.data;
+  },
+};
+
 export default api; 
