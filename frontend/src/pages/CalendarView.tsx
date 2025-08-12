@@ -34,6 +34,8 @@ const CalendarView = () => {
   const [year, setYear] = useState<number>(today.getFullYear());
   const [monthIndex, setMonthIndex] = useState<number>(today.getMonth());
   const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [userTrips, setUserTrips] = useState<any[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const loadTripsFromLocalStorage = () => {
     try {
@@ -54,12 +56,51 @@ const CalendarView = () => {
     }
   };
 
+  // Load user-specific trips from backend
+  const loadUserTrips = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.user.trips) {
+          const userTripEvents: CalendarEvent[] = data.user.trips.map((trip: any) => ({
+            title: trip.name || "Untitled Trip",
+            start: trip.startDate ? trip.startDate.split('T')[0] : '',
+            end: trip.endDate ? trip.endDate.split('T')[0] : '',
+          })).filter((trip: CalendarEvent) => Boolean(trip.start && trip.end));
+
+          setUserTrips(data.user.trips);
+          setEvents([...sampleEvents, ...userTripEvents]);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load user trips:", error);
+    }
+  };
+
   // Compute today's date string once for highlighting
   const todayDateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+  // Check authentication
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   // Always load trips from localStorage and combine with sample events
   useEffect(() => {
     loadTripsFromLocalStorage();
+    if (isAuthenticated) {
+      loadUserTrips(); // Load user-specific trips only if authenticated
+    }
 
     const onStorage = (e: StorageEvent) => {
       if (e.key === "trips") {
@@ -68,13 +109,18 @@ const CalendarView = () => {
     };
 
     window.addEventListener("storage", onStorage);
-    window.addEventListener("focus", loadTripsFromLocalStorage);
+    window.addEventListener("focus", () => {
+      loadTripsFromLocalStorage();
+      if (isAuthenticated) {
+        loadUserTrips();
+      }
+    });
 
     return () => {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("focus", loadTripsFromLocalStorage);
     };
-  }, []);
+  }, [isAuthenticated]);
 
   const daysInMonth = getDaysInMonth(year, monthIndex);
   const firstWeekIndex = getFirstDayWeekIndex(year, monthIndex);
@@ -120,7 +166,10 @@ const CalendarView = () => {
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="container mx-auto py-8">
-        <h1 className="text-center text-xl mb-6">Calendar View</h1>
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold mb-2 text-[#d3d3ff]">My Travel Calendar</h1>
+          <p className="text-[#d3d3ff]/80">View all your planned trips and adventures</p>
+        </div>
 
         <div className="flex items-center justify-between max-w-3xl mx-auto mb-4 gap-2">
           <div className="flex items-center gap-2">
@@ -202,6 +251,28 @@ const CalendarView = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* User Trips Section */}
+        {userTrips.length > 0 && (
+          <Card className="bg-black/60 border-[#E6E6FA]/50 max-w-3xl mx-auto mt-6 rounded-xl shadow-lg shadow-[#B993D6]/10">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold mb-4 text-[#d3d3ff]">My Trips</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {userTrips.map((trip: any) => (
+                  <div key={trip.id} className="bg-white/10 rounded-lg p-4 border border-white/20">
+                    <h4 className="font-semibold text-white mb-2">{trip.name}</h4>
+                    <p className="text-white/80 text-sm">
+                      {new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}
+                    </p>
+                    {trip.description && (
+                      <p className="text-white/60 text-sm mt-2">{trip.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </main>
   );

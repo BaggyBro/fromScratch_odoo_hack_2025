@@ -207,14 +207,24 @@ export default function Community() {
                           {post.trip.description && (
                             <p className="text-sm text-black/80 mt-2">{post.trip.description}</p>
                           )}
-                          <Button
-                            onClick={() => navigate(`/build-itinerary/${post.trip.id}`)}
-                            variant="outline"
-                            size="sm"
-                            className="mt-3 text-white bg-black border-black hover:bg-gray-800"
-                          >
-                            View Itinerary
-                          </Button>
+                          <div className="flex space-x-2 mt-3">
+                            <Button
+                              onClick={() => navigate(`/build-itinerary/${post.trip.id}`)}
+                              variant="outline"
+                              size="sm"
+                              className="text-black bg-white"
+                            >
+                              View Itinerary
+                            </Button>
+                            {/* <Button
+                              onClick={() => navigate(`/calendar/${post.trip.id}`)}
+                              variant="outline"
+                              size="sm"
+                              className="text-green-600 border-green-300 hover:bg-green-50"
+                            >
+                              View Calendar
+                            </Button> */}
+                          </div>
                         </div>
                       )}
                       
@@ -253,7 +263,7 @@ export default function Community() {
                 {error && <p className="text-red-500 text-sm">{error}</p>}
                 
                 <div>
-                  <label className="block text-sm font-medium text-black mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Title
                   </label>
                   <Input
@@ -266,7 +276,7 @@ export default function Community() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-black mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Content
                   </label>
                   <textarea

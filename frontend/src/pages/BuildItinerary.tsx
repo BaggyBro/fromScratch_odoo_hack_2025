@@ -7,7 +7,7 @@ import { useTrip } from "@/hooks/useTrip";
 import { formatDate, calculateDays } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDown, ChevronRight, Check, IndianRupee, AlertCircle, Share2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,6 +23,20 @@ const BuildItinerary = () => {
   const [shareComment, setShareComment] = useState("");
   const [sharing, setSharing] = useState(false);
   const { toast } = useToast();
+
+  // Check authentication
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to view this itinerary",
+        variant: "destructive",
+      });
+      navigate("/login");
+      return;
+    }
+  }, [navigate, toast]);
 
   const toggleSection = (index: number) => {
     setOpenSections(prev => {
@@ -264,7 +278,7 @@ const BuildItinerary = () => {
                 onClick={() => setShowShareModal(true)}
                 variant="outline"
                 size="sm"
-                className="flex items-center space-x-2 bg-white hover:bg-gray-50 text-black border-gray-300"
+                className="flex items-center space-x-2 bg-white text-black border-gray-300"
               >
                 <Share2 className="w-4 h-4" />
                 <span>Share</span>
@@ -323,7 +337,7 @@ const BuildItinerary = () => {
                           <div className="text-right">
                             <div className="text-sm text-gray-600">Total Cost</div>
                             <div className="text-lg font-bold text-green-600">
-                              ₹{cityGroup.activities.reduce((total, activity) => total + (activity.cost || 0), 0)}
+                              ₹0
                             </div>
                           </div>
                           {openSections.has(index) ? (
@@ -364,55 +378,11 @@ const BuildItinerary = () => {
                                 
                                 {/* Cost Section */}
                                 <div className="flex items-center space-x-2">
-                                  {editingCost === activity.id ? (
-                                    <div className="flex items-center space-x-2">
-                                      <Input
-                                        type="number"
-                                        value={costInput}
-                                        onChange={(e) => setCostInput(e.target.value)}
-                                        className="w-20 h-8 text-sm"
-                                        placeholder="0"
-                                        min="0"
-                                        step="0.01"
-                                      />
-                                      <Button
-                                        size="sm"
-                                        onClick={() => handleCostSave(activity.id)}
-                                        disabled={updatingCost === activity.id}
-                                        className="h-8 w-8 p-0 bg-green-600 hover:bg-green-700"
-                                      >
-                                        {updatingCost === activity.id ? (
-                                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                        ) : (
-                                          <Check className="w-4 h-4" />
-                                        )}
-                                      </Button>
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={handleCostCancel}
-                                        className="h-8 w-8 p-0"
-                                      >
-                                        ×
-                                      </Button>
-                                    </div>
-                                  ) : (
-                                    <div className="flex items-center space-x-2">
-                                      {activity.cost > 0 && (
-                                        <span className="text-sm font-medium text-green-600">
-                                          ₹{activity.cost}
-                                        </span>
-                                      )}
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => handleCostEdit(activity.id, activity.cost || 0)}
-                                        className="h-8 w-8 p-0"
-                                      >
-                                        <IndianRupee className="w-4 h-4" />
-                                      </Button>
-                                    </div>
-                                  )}
+                                  <div className="flex items-center space-x-2">
+                                    <span className="text-sm font-medium text-green-600">
+                                      ₹0
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             ))}
@@ -472,7 +442,7 @@ const BuildItinerary = () => {
                 value={shareComment}
                 onChange={(e) => setShareComment(e.target.value)}
                 placeholder="Share your experience, tips, or what made this trip special..."
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 rows={4}
                 maxLength={500}
               />

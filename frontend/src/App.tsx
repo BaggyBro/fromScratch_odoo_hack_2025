@@ -15,6 +15,7 @@ import CitySearch from "./pages/CitySearch";
 import ActivitySearch from "./pages/ActivitySearch";
 import Budget from "./pages/Budget";
 import CalendarView from "./pages/CalendarView";
+import UserCalendar from "./pages/UserCalendar";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/auth/Login";
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/activity-search/:tripId" element={<ActivitySearch />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/calendar" element={<CalendarView />} />
+          <Route path="/calendar/:tripId" element={<UserCalendar />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
