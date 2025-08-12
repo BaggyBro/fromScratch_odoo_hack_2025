@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 export const createCommunityPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, tripId } = req.body;
     const userId = req.user?.userId;
 
     if (!userId) {
@@ -16,7 +16,12 @@ export const createCommunityPost = async (req, res) => {
     }
 
     const newPost = await prisma.communityPost.create({
-      data: { userId, title, content }, // no tripId
+      data: { 
+        userId, 
+        title, 
+        content,
+        tripId: tripId ? parseInt(tripId) : null
+      },
     });
 
     return res
@@ -40,6 +45,15 @@ export const getCommunityPosts = async (req, res) => {
             lastName: true,
             city: true,
             country: true,
+          },
+        },
+        trip: {
+          select: {
+            id: true,
+            name: true,
+            startDate: true,
+            endDate: true,
+            description: true,
           },
         },
       },

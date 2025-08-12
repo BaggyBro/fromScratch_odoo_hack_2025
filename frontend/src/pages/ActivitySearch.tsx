@@ -80,7 +80,7 @@ const ActivitySearch = () => {
           : "tourism,entertainment,leisure,national_park,commercial.food_and_drink";
 
       const response = await axios.post(
-        `http://localhost:3000/trips/${tripId}/search/api`,
+        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/trips/${tripId}/search/api`,
         {
           city: searchQuery,
           categories: categories,
@@ -154,7 +154,7 @@ const ActivitySearch = () => {
       const token = localStorage.getItem("token");
       // Use the add-city-with-activities endpoint
       const response = await axios.post(
-        `http://localhost:3000/trips/${tripId}/add-city-with-activities`,
+        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/trips/${tripId}/add-city-with-activities`,
         payload,
         {
           headers: {

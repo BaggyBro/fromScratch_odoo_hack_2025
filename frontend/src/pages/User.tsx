@@ -11,7 +11,7 @@ const User = () => {
       {user ? (
         <div>
           <img
-            src={user.photo || "https://via.placeholder.com/150"}
+            src={user.profilePic || "https://via.placeholder.com/150"}
             alt={user.firstName || "User"}
             className="h-32 w-32 rounded-full mb-4 object-cover"
           />

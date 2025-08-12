@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CreateTripData, UpdateTripData, CreateBudgetData } from '@/types/trip';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 // Create axios instance with default config
 const api = axios.create({

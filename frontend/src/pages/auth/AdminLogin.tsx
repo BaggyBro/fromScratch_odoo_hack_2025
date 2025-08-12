@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Spline from "@splinetool/react-spline";
 
-const API_BASE = "http://localhost:3000"; // backend URL
+const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000"; // backend URL
 
 const AdminLogin = () => {
   const [loading, setLoading] = useState(false);

@@ -93,7 +93,7 @@ const Signup = () => {
         ...formData,
         photo: photoUrl,
       };
-      const res = await fetch("http://localhost:3000/auth/signup", {
+              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyData),
@@ -104,7 +104,7 @@ const Signup = () => {
         // If we have a photo URL, upload it to Cloudinary
         if (photoUrl && photoUrl.startsWith('data:')) {
           try {
-            const photoResponse = await fetch("http://localhost:3000/profile/photo/upload", {
+                         const photoResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/profile/photo/upload`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

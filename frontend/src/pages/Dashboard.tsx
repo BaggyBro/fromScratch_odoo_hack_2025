@@ -16,7 +16,7 @@ const Dashboard = () => {
 
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/trips/view", {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/trips/view`, {
           headers: { Authorization: `Bearer ${token} `},
         });
         if (response.data.success) {

@@ -105,13 +105,17 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-6 mb-10 border border-black/10 p-6 rounded-lg bg-white/20 backdrop-blur-sm">
-          <img
-            src={
-              user.profilePic || "https://via.placeholder.com/150?text=User+Image"
-            }
-            alt={`${user.firstName} ${user.lastName}`}
-            className="w-32 h-32 rounded-full object-cover border-4 border-white/30 shadow-lg"
-          />
+          {user.profilePic ? (
+            <img
+              src={user.profilePic}
+              alt={`${user.firstName} ${user.lastName}`}
+              className="w-32 h-32 rounded-full object-cover border-4 border-white/30 shadow-lg"
+            />
+          ) : (
+            <div className="w-32 h-32 flex items-center justify-center rounded-full bg-[#d3d3ff] border-4 border-white/30 shadow-lg text-6xl">
+              <span role="img" aria-label="User">👤</span>
+            </div>
+          )}
           <div className="flex-1 text-black">
             <h2 className="text-2xl font-semibold mb-2">
               {user.firstName} {user.lastName}

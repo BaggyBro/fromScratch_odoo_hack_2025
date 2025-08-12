@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Spline from "@splinetool/react-spline";
 
-const API_BASE = "http://localhost:3000";
+const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 const Login = () => {
   const [email, setEmail] = useState("");

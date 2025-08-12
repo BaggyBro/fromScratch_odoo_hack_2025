@@ -24,7 +24,7 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await fetch("http://localhost:3000/profile", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,10 @@ const Navbar = () => {
       }
     }
     
-    fetchUserProfile();
+    // Add a small delay to ensure the profile is fetched after the page loads
+    const timer = setTimeout(() => {
+      fetchUserProfile();
+    }, 100);
 
     const handleProfileUpdate = () => {
       fetchUserProfile();
@@ -63,9 +66,17 @@ const Navbar = () => {
     window.addEventListener('profileUpdated', handleProfileUpdate);
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('profileUpdated', handleProfileUpdate);
     };
   }, []);
+
+  // Refresh profile when location changes (user navigates to different pages)
+  useEffect(() => {
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");

@@ -6,7 +6,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useTrip } from "@/hooks/useTrip";
 import { formatDate, calculateDays } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, ChevronRight, Check, IndianRupee, AlertCircle } from "lucide-react";
+import { ChevronDown, ChevronRight, Check, IndianRupee, AlertCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
@@ -19,6 +19,9 @@ const BuildItinerary = () => {
   const [editingCost, setEditingCost] = useState<number | null>(null);
   const [costInput, setCostInput] = useState("");
   const [updatingCost, setUpdatingCost] = useState<number | null>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareComment, setShareComment] = useState("");
+  const [sharing, setSharing] = useState(false);
   const { toast } = useToast();
 
   const toggleSection = (index: number) => {
@@ -53,7 +56,7 @@ const BuildItinerary = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:3000/activity/cost",
+        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/activity/cost`,
         { activityId, cost },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -89,6 +92,84 @@ const BuildItinerary = () => {
   const handleCostCancel = () => {
     setEditingCost(null);
     setCostInput("");
+  };
+
+  const handleShareTrip = async () => {
+    if (!shareComment.trim()) {
+      toast({
+        title: "Comment Required",
+        description: "Please add a comment before sharing your trip",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSharing(true);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast({
+          title: "Authentication Required",
+          description: "Please log in to share your trip",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/community`,
+        {
+          title: `Shared Trip: ${trip.name}`,
+          content: shareComment,
+          tripId: trip.id
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      toast({
+        title: "Trip Shared! 🎉",
+        description: "Your trip has been shared to the community successfully",
+      });
+
+      setShowShareModal(false);
+      setShareComment("");
+    } catch (error) {
+      console.error("Failed to share trip:", error);
+      toast({
+        title: "Share Failed",
+        description: "Failed to share trip. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  const shareToSocialMedia = (platform: string) => {
+    const tripUrl = `${window.location.origin}/build-itinerary/${trip.id}`;
+    const tripTitle = `Check out my amazing trip: ${trip.name}`;
+    const tripDescription = shareComment || `I just planned an incredible journey to ${trip.stopActivities.map(sa => sa.city.name).join(', ')}!`;
+    
+    let shareUrl = '';
+    
+    switch (platform) {
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tripTitle)}&url=${encodeURIComponent(tripUrl)}`;
+        break;
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(tripUrl)}&quote=${encodeURIComponent(tripDescription)}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(tripUrl)}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${encodeURIComponent(`${tripTitle} ${tripUrl}`)}`;
+        break;
+      default:
+        return;
+    }
+    
+    window.open(shareUrl, '_blank', 'width=600,height=400');
   };
 
   if (loading) {
@@ -178,7 +259,18 @@ const BuildItinerary = () => {
                 {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
               </div>
             </div>
-            <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+            <div className="flex items-center space-x-3">
+              <Button
+                onClick={() => setShowShareModal(true)}
+                variant="outline"
+                size="sm"
+                className="flex items-center space-x-2 bg-white hover:bg-gray-50 text-black border-gray-300"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>Share</span>
+              </Button>
+              <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+            </div>
           </div>
         </div>
 
@@ -362,6 +454,96 @@ const BuildItinerary = () => {
           </Button>
         </div>
       </div>
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-black mb-4">Share Your Trip</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Share "{trip.name}" with the community and let others know about your amazing journey!
+            </p>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Add a comment about your trip:
+              </label>
+              <textarea
+                value={shareComment}
+                onChange={(e) => setShareComment(e.target.value)}
+                placeholder="Share your experience, tips, or what made this trip special..."
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={4}
+                maxLength={500}
+              />
+              <div className="text-xs text-gray-500 text-right mt-1">
+                {shareComment.length}/500
+              </div>
+            </div>
+
+            {/* Social Media Sharing */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Share to social media:
+              </label>
+              <div className="flex space-x-2">
+                <button
+                  type="button"
+                  onClick={() => shareToSocialMedia('twitter')}
+                  className="flex-1 bg-blue-400 hover:bg-blue-500 text-white py-2 px-3 rounded-md text-sm font-medium transition-colors"
+                >
+                  Twitter
+                </button>
+                <button
+                  type="button"
+                  onClick={() => shareToSocialMedia('facebook')}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-md text-sm font-medium transition-colors"
+                >
+                  Facebook
+                </button>
+                <button
+                  type="button"
+                  onClick={() => shareToSocialMedia('linkedin')}
+                  className="flex-1 bg-blue-700 hover:bg-blue-800 text-white py-2 px-3 rounded-md text-sm font-medium transition-colors"
+                >
+                  LinkedIn
+                </button>
+                <button
+                  type="button"
+                  onClick={() => shareToSocialMedia('whatsapp')}
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-md text-sm font-medium transition-colors"
+                >
+                  WhatsApp
+                </button>
+              </div>
+            </div>
+
+            <div className="flex space-x-3">
+              <Button
+                onClick={() => setShowShareModal(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleShareTrip}
+                disabled={sharing || !shareComment.trim()}
+                className="flex-1 bg-blue-600 hover:bg-blue-700"
+              >
+                {sharing ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Sharing...</span>
+                  </div>
+                ) : (
+                  "Share to Community"
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
